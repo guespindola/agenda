@@ -17,8 +17,8 @@ $comando="INSERT INTO pessoas (nome, sobrenome, email, foto, relacoes_idRelacao)
 
 $resultado=mysqli_query($conexao, $comando);
 if($resultado) {
-    header("Location: pessoasForm.php?retorno=1");
+    header("Location: pessoaForm.php?retorno=1");
 } else {
-    header("Location: pessoasForm.php?retorno=0");
+    header("Location: pessoaForm.php?retorno=0");
 }
 
