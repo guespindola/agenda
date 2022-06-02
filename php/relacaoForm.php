@@ -88,34 +88,37 @@
 		<tr>
 			<th>Descrição da relação</th>			
 			<th>Ações</th>
-		</tr>	
+		</tr>		
 				<tr>
-					<?php 
-						require_once('conexaoBanco.php');
-						$comando="SELECT * FROM relacoes";
+				
+				<?php
 
-						if(isset($_GET['pesquisa']) && $_GET['pesquisa']!="") {
-							$pesquisa=$_GET['pesquisa'];
-							$comando= $comando . " WHERE descricao LIKE '$pesquisa%'";
-							//$comando.= " WHERE descricao LIKE '$pesquisa%'";
-						}
-						//echo $comando;
-						$resultado=mysqli_query($conexao, $comando);
-						$linhas=mysqli_num_rows($resultado);
+					require_once("conexaoBanco.php");
+					$comando="SELECT * FROM relacoes";
 
-						if($linhas==0){
-							echo "<tr><td colspan='2'> Nenhuma relação encontrada!</td></tr>";
-						} else {
-							$relacoesRetornadas=array();
+					if(isset($_GET['pesquisa']) && $_GET['pesquisa']!=""){
+						$pesquisa=$_GET['pesquisa'];
+						$comando = $comando . " WHERE descricao LIKE '$pesquisa%'";
+						//$comando.= " WHERE descricao LIKE '$pesquisa%'";
+					}
+					//echo $comando;
+					$resultado=mysqli_query($conexao, $comando);
+					$linhas=mysqli_num_rows($resultado);
 
-							while($r=mysqli_fetch_assoc($resultado)){
-								array_push($relacoesRetornadas, $r);
-							}
-							foreach($relacoesRetornadas as $r) {
-								echo "<td> ".$r['descricao']." </td>";
+					if($linhas==0){
+						echo "<tr><td> colspan='2'> Nenhum relação encontrada! </td></tr>";
+					}else{
+						$relacoesRetornadas=array();
 
-					?>
-					<td>
+						while($r = mysqli_fetch_assoc($resultado)){
+							array_push($relacoesRetornadas, $r);
+
+						}// fechamento do while
+					}// fechamento do else
+					foreach($relacoesRetornadas as $r){
+						echo "<td> ".$r['descricao']." </td>";?>
+				
+				<td>
 				<form action="editarRelacaoForm.php" method="POST"  class="formAcao">
 					<input type="hidden" name="idRelacao" value="<?=$r['idRelacao']?>">
 					<button type="submit" class="botaoAcao">
@@ -135,9 +138,11 @@
 				</td>
 			</tr>
 			<?php
-					}
-				}
-			?>
+			} // fechamento do foreach
+
+	
+
+?>
 	</table>
 	</div>	
 </body>
