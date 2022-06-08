@@ -13,11 +13,12 @@ $linhas=mysqli_num_rows($resultadoPessoas);
 
 if($linhas==0){
     $comando="DELETE FROM relacoes WHERE idRelacao=".$idRelacao;
-    $resultado=mysqli_query($conexao, $comando);
+    $resultado=mysqli_query($conexao,$comando);
     if($resultado==true){
-     header("Location: relacaoForm.php?retorno=2");
+        header("Location: relacaoForm.php?retorno=2");
     }
 }else{
+    
     header("Location: relacaoForm.php?retorno=3");
 }
 
