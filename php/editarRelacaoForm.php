@@ -1,3 +1,7 @@
+<?php
+session_start();
+if(isset($_SESSION['nivel'])&& $_SESSION['nivel']=="1"){
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -15,15 +19,15 @@
 </head>
 <body>
 
-	<?php include("menuSecretaria.php"); ?>
-
-	<?php
-
+	<?php include("menuSecretaria.php");
+	
 	require_once("conexaoBanco.php");
 	$idRelacao=$_POST['idRelacao'];
-	$comando="SELECT * FROM  relacoes WHERE idRelacao=".$idRelacao;
-	$resultado=mysqli_query($conexao,$comando);	
+	$comando="SELECT * FROM relacoes WHERE idRelacao=".$idRelacao;
+	$resultado=mysqli_query($conexao,$comando);
 	$r=mysqli_fetch_assoc($resultado);
+
+	
 	?>
 	
     <h3 class="titulos">Edição de relação</h3>  
@@ -42,11 +46,17 @@
 		<label class="control-label"></label>
 		<div class="col-md-8">
         <a href="relacaoForm.php"><button  class="btn btn-danger" type="button">Cancelar</button></a>
-			<button  class="btn btn-success" type="submit">Editar</button>			
+			<button  class="btn btn-success" type="submit">Cadastrar</button>			
 		</div>
 		</div>		
 	</form>
 </body>
 </html>
+<?php
+	}else{
+		header("Location: alertaEfetuarLogin.html");
+	}
+
+?>
 
   

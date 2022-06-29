@@ -1,9 +1,10 @@
 <?php
-    session_start();
+session_start();
 
-    unset($_SESSION['nivel']);
+unset($_SESSION['nivel']);
 
-    header("Location: ../index.php");
+header("Location: ../index.php");
+
 
 
 ?>

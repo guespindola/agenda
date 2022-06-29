@@ -1,11 +1,10 @@
 <?php
-
-	require_once("conexaoBanco.php");
+    require_once("conexaoBanco.php");
     $idRelacao=$_POST['idRelacao'];
     $descricao=$_POST['descricao'];
 
-    $comando="UPDATE relacoes SET descricao='".$descricao."'
-    WHERE idRelacao=".$idRelacao;
+    $comando="UPDATE relacoes SET descricao='".$descricao."' WHERE idRelacao=".$idRelacao;
+
 
     // echo $comando;
 
@@ -16,4 +15,5 @@
     }else{
         header("Location: relacaoForm.php?retorno=5");
     }
+
 ?>

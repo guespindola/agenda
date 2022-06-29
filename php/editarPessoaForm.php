@@ -1,3 +1,7 @@
+<?php
+session_start();
+if(isset($_SESSION['nivel'])&& $_SESSION['nivel']=="1"){
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -17,24 +21,24 @@
 
     <?php include("menuSecretaria.php"); ?>    
 
-    <h3 class="titulos">Edição de pessoas</h3>
-	
+    <h3 class="titulos">Edição de pessoas</h3>     
 	<?php
 		require_once("conexaoBanco.php");
+
 		$idPessoa=$_POST['idPessoa'];
-		$comando="SELECT * FROM  pessoas WHERE idPessoa=".$idPessoa;
+		$comando="SELECT * FROM pessoas WHERE idPessoa=".$idPessoa;
 		$resultado=mysqli_query($conexao,$comando);
 		$p=mysqli_fetch_assoc($resultado);
-		
-	?>
 
+
+	?> 
 	<form action="editarPessoa.php" method="POST" enctype="multipart/form-data">
 
         <input type="hidden" name="idPessoa" value="<?=$p['idPessoa']?>">
 		<div class="form-group">
 		  <label class="control-label">Nome *</label>  
 		<div class="col-md-8">
-		 <input type="text" value=<?=$p['nome']?>"" name="nome"  accept="image/*" class="form-control" >
+		 <input type="text" value="<?=$p['nome']?>" name="nome" accept="image/*" class="form-control" >
 		</div>
 		</div>
 		
@@ -63,23 +67,22 @@
 		  <label class="control-label">Relação *</label>  
 		<div class="col-md-8">
 		 <select name="idRelacao" class="form-control">
-			 <?php
-		 require_once("conexaoBanco.php");
-				$comando="SELECT * FROM relacoes";
-				$resultado=mysqli_query($conexao,$comando);
-				$relacoesRetornadas=array();
-				while($r = mysqli_fetch_assoc($resultado)){
-					array_push($relacoesRetornadas,$r);
-				}
-				foreach($relacoesRetornadas as $r){
-					if($p['relacoes_idRelacao']==$r['idRelacao']){
-						 echo " <option selected value='".$r['idRelacao']."'>".$r['descricao']."</option>";
-					}else {
-						echo " <option value='".$r['idRelacao']."'>".$r['descricao']."</option>";
-					}
-					
-				}
-				?>
+		 	<?php
+			  require_once("conexaoBanco.php");
+			  $comando="SELECT * FROM relacoes";
+			  $resultado=mysqli_query($conexao,$comando);
+			  $relacoesRetornadas=array();
+			  while($r  = mysqli_fetch_assoc($resultado)){
+				  array_push($relacoesRetornadas, $r);
+			  }
+			  foreach($relacoesRetornadas as  $r){
+				  if($p['relacoes_idRelacao']==$r['idRelacao']){
+					echo "<option selected value='".$r['idRelacao']."'>".$r['descricao']."</option>";
+				  }else{
+					  echo "<option value='".$r['idRelacao']."'>".$r['descricao']."</option>";
+				  }
+			  }
+			 ?>
 		 </select>
 		</div>
 		</div>
@@ -93,5 +96,10 @@
 		</div>		
 	</form>
 </body>
+<?php
+	}else{
+		header("Location: alertaEfetuarLogin.html");
+	}
 
+?>
 	

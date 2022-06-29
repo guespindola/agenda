@@ -1,3 +1,7 @@
+<?php
+session_start();
+if(isset($_SESSION['nivel'])&& $_SESSION['nivel']=="1"){
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -146,12 +150,8 @@
                 <input type="text" name="obs" class="form-control" value="">
             </div>
 		</div>       
-
-		<div class="form-group row" id="pessoa0">
-        <div class="row">
-         
-      
-		
+    
+    		
         <h5 class="col-md-8">Selecione a(s) pessoa(s) que fazem parte do compromisso* 
         <button type="button"  onclick="adicionarPessoa()" class="btn btn-secondary">Adicionar pessoa</button></h5>
 		
@@ -232,11 +232,12 @@
                  $compromissos=array();
                  $linhas=mysqli_num_rows($resultado);
                  if($linhas==0){
-                    echo "<tr><td colspan='6'>Nenhum compromisso foi encotrado</td></tr>";
+                     echo "<tr><td colspan='6'>Nenhum Compromisso encontrado</td></tr>";
                  }else{
-                 while($c = mysqli_fetch_assoc($resultado)){
-                        array_push($compromissos, $c);
-                 }
+                     while($c = mysqli_fetch_assoc($resultado)){
+                            array_push($compromissos, $c);
+                    }
+                 
 
                  foreach($compromissos as $c){
                      echo "<td>".$c['descricao']."</td>";
@@ -264,8 +265,8 @@
 			</form>
 			</td>
 		</tr>	
-                 <?php } //fechamento do foreach
-                } // fechamento do else
+                 <?php } //fechamento foreach
+                } //fechamento else
                 ?>
 
 	</table>
@@ -274,3 +275,9 @@
     
 </body>
 </html>
+<?php
+	}else{
+		header("Location: alertaEfetuarLogin.html");
+	}
+
+?>

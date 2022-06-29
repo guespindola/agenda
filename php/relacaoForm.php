@@ -1,3 +1,7 @@
+<?php
+session_start();
+if(isset($_SESSION['nivel'])&& $_SESSION['nivel']=="1"){
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -89,37 +93,35 @@
 			<th>Descrição da relação</th>			
 			<th>Ações</th>
 		</tr>		
-				<tr>
-				<?php
-					require_once("conexaoBanco.php");
-					$comando="SELECT * FROM relacoes ";
+				<tr>		
+					
+			<?php
 
+			require_once("conexaoBanco.php");
+			$comando="SELECT * FROM relacoes ";
+			
+			if(isset($_GET['pesquisa']) && $_GET['pesquisa']!=""){
+				$pesquisa=$_GET['pesquisa'];
+				$comando=$comando . "WHERE descricao LIKE '".$pesquisa."%'";
+				//$comando.= "WHERE descricao LIKE '".$pesquisa."%'";
+			}
+			// echo $comando;
 
-					if(isset($_GET['pesquisa']) && $_GET['pesquisa']!=""){
-						$pesquisa=$_GET['pesquisa'];
-						$comando = $comando . "WHERE descricao LIKE '".$pesquisa."%'";
-						// $comando.= "WHERE descricao LIKE '".$pesquisa"%'";
+			$resultado=mysqli_query($conexao,$comando);
+			$linhas=mysqli_num_rows($resultado);
 
-					}
+			if($linhas==0){
+				echo"<tr><td colspan='2'>Nenhuma relação encontrada!</td></tr>";
+			}else{
+				$relacoesRetornadas=array();
 
-					// ssecho $comando;
-
-					$resultado=mysqli_query($conexao,$comando);
-					$linhas=mysqli_num_rows($resultado);
-
-					if($linhas==0){
-						echo "<tr><td colspan='2'> Nenhuma relacao encontrada! </td> </tr>";
-					}else{
-						$relacoesRetornadas=array();
-
-						while( $r = mysqli_fetch_assoc($resultado)){
-							array_push($relacoesRetornadas,$r);
-						}//fechamento do while
-						foreach($relacoesRetornadas as $r){
-							echo "<td> ".$r['descricao']." </td>";
-						
-				?>
-				
+				while($r = mysqli_fetch_assoc($resultado)){
+					array_push($relacoesRetornadas,$r);
+				}
+				foreach($relacoesRetornadas as $r){
+					echo"<td>".$r['descricao']."</td>";
+			
+			?>
 				<td>
 				<form action="editarRelacaoForm.php" method="POST"  class="formAcao">
 					<input type="hidden" name="idRelacao" value="<?=$r['idRelacao']?>">
@@ -139,11 +141,17 @@
 				</form>
 				</td>
 			</tr>
- <?php
-		}
-					}//fechamento do else
-				?>
+			<?php
+				}
+			}
+			?>
 	</table>
 	</div>	
 </body>
 </html>
+<?php
+	}else{
+		header("Location: alertaEfetuarLogin.html");
+	}
+
+?>

@@ -1,5 +1,3 @@
-<!-- fazer isso 2 -->
-
 <?php
 
 require_once("conexaoBanco.php");
@@ -7,10 +5,10 @@ require_once("conexaoBanco.php");
 $email=$_POST['email'];
 $senha=$_POST['senha'];
 
-// funcao md5() criptografa a senha no algoritimo MD5
+//função md5() criptografa a senha no algoritimo MD5
 $senhaMD5=md5($senha);
 
-$comando = "SELECT * FROM usuarios WHERE email='".$email."' AND senha='".$senhaMD5."'";
+$comando="SELECT * FROM usuarios WHERE email='".$email."' AND senha='".$senhaMD5."' ";
 
 $resultado=mysqli_query($conexao,$comando);
 
@@ -21,7 +19,8 @@ if($linhas==0){
 }else{
     $usuario=mysqli_fetch_assoc($resultado);
     session_start();
-    $_SESSION['nivel']= $usuario['nivel'];
+    $_SESSION['nivel']=$usuario['nivel'];
+    
     if($usuario['nivel']=='1'){
         header("Location: principalSecretaria.php");
     }else{

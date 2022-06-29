@@ -1,3 +1,7 @@
+<?php
+session_start();
+if(isset($_SESSION['nivel'])&& $_SESSION['nivel']=="1"){
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -83,7 +87,6 @@
 					echo "<td>".$c['numero']."</td>";				
 			?>
 
-
 			<td>
 			<form action="visualizarMais.php" method="POST" class="formAcao">
 				<input type="hidden" name="idComp" value="<?=$c['idCompromisso']?>">
@@ -116,3 +119,9 @@
 		
 </body>
 </html>
+<?php
+	}else{
+		header("Location: alertaEfetuarLogin.html");
+	}
+
+?>

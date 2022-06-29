@@ -4,8 +4,8 @@ require_once("conexaoBanco.php");
 
 $descricao=$_POST['descricao'];
 
-$comando ="INSERT INTO relacoes (descricao) VALUES('".$descricao."')";
-// faca o ecgo aqui antes tá...
+$comando="INSERT INTO relacoes (descricao) VALUES ('".$descricao."')";
+
 $resultado=mysqli_query($conexao,$comando);
 
 if($resultado==true){
